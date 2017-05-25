@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { List }           from './list';
 import {ListService} from './list.service';
 
 @Component({
@@ -14,16 +15,21 @@ import {ListService} from './list.service';
 })
 export class ListComponent implements OnInit{ 
 
-    public list=[];
+    list:List[]=[];
 
     constructor(private listService: ListService){}
     
     loadlist(){
-        this.listService.getList().subscribe((list) => {
-	        var darr = list.holidays;
-			for(var i in darr){
-				this.list.push(darr[i]);
-		    }
+        this.listService.getList().subscribe((list: List[]) => {
+	        var darr = list;
+          for(var i in darr)
+          {
+            var darr1=darr[i];
+            for(var i1 in darr1)
+            {
+              this.list.push(darr1[i1]);
+            }
+          }
         });
     }
 
